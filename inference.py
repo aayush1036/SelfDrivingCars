@@ -30,7 +30,11 @@ else:
         latest_run = runs[version]
     else:
         latest_run = runs[version-1]
-    model = torch.hub.load('yolov5', 'custom', path=os.path.join(runs_path, latest_run, 'best.pt'), source='local')    
+    model = torch.hub.load('yolov5', 'custom', path=os.path.join(runs_path, latest_run, 'best.pt'), source='local') 
+    
+wheel = cv2.imread(os.path.join('resources', 'steering_wheel_image.jpg'))   
+wheel = cv2.cvtColor(wheel, cv2.COLOR_BGR2GRAY)
+rows, cols = wheel.shape
     
 if source is not None:
     cap = cv2.VideoCapture(source)
@@ -46,7 +50,10 @@ if source is not None:
             diff = 320-centriod
             rot = (diff/640)*630
             cv2.imshow('Result', np.squeeze(res.render()))
-            print(rot)
+            M = cv2.getRotationMatrix2D((cols/2,rows/2), rot, 1)
+            dst = cv2.warpAffine(wheel, M, (cols,rows))
+            cv2.imshow('Steering wheel', dst)
+            
             if cv2.waitKey(10) & 0xFF == ord('q'):
                 break  
         else: 
