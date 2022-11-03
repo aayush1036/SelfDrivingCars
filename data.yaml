@@ -10,5 +10,5 @@ names:
 - train
 - truck
 nc: 10
-train: Data/train
-val: Data/val
+train: D:\ANN\BDD Project\Data\train
+val: D:\ANN\BDD Project\Data\val

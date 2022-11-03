@@ -47,8 +47,9 @@ if source is not None:
             img = np.squeeze(res.render())
             res_df = pd.concat(res.pandas().xyxy)
             centriod = res_df[['xmin', 'xmax']].mean(axis=1).mean()
-            diff = 320-centriod
-            rot = (diff/640)*630
+            h = (320-centriod)/320
+            h = (h+1)*(h)*(h-1)
+            rot = h*630
             cv2.imshow('Result', np.squeeze(res.render()))
             M = cv2.getRotationMatrix2D((cols/2,rows/2), rot, 1)
             dst = cv2.warpAffine(wheel, M, (cols,rows))

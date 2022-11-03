@@ -48,6 +48,8 @@ labels = [
 labelmap = dict(zip(labels, range(len(labels))))
 
 assert train_sample.isnull().sum().sum() == 0 and val_sample.isnull().sum().sum() == 0
+os.makedirs(TRAIN_DESTINATION, exist_ok=True)
+os.makedirs(VAL_DESTINATION, exist_ok=True)
 
 for idx, label in tqdm(train_sample.iterrows(), total=TRAIN_SIZE):
     imgname = label['name']
